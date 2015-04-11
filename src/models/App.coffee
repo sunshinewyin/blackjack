@@ -14,6 +14,7 @@ class window.App extends Backbone.Model
       @set 'playerHand', deck.dealPlayer()
       @set 'dealerHand', deck.dealDealer()
       @set 'playerCurrentScore', @get('playerHand').scores()[0]
+      @set 'result', ''
       @trigger('newGame')
 
   checkIfOver: ->
@@ -43,23 +44,16 @@ class window.App extends Backbone.Model
   whoWon: ->
     dealerScore = @get('dealerHand').dealerRealScore()
     playerScore = @get('playerHand').scores()[0]
-    # if dealerScore > playerScore
-    #   # alert 'you lose' + ' dealer score: ' + dealerScore
-    # else if dealerScore == playerScore
-    #   alert 'tie' + ' dealer score: ' + dealerScore
-    # else
-    #   alert 'you win' + ' dealer score: ' + dealerScore
+    if dealerScore > playerScore
+      @set 'result', 'You lost. Dealer score was: ' + dealerScore
+    else if dealerScore == playerScore
+      @set 'result', 'You tied.'
+    else
+      @set 'result', 'You win. Dealer score was: ' + dealerScore
     @trigger('showScore')
 
 
 
-
-
-
-
-
-    # elif dealerScore > playerScore
-      #
 
 
 
