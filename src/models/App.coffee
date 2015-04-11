@@ -6,6 +6,7 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
     @set 'playerCurrentScore', @get('playerHand').scores()[0]
+    @set 'dealerFinalScore', @get('dealerHand').scores()[0]
 
   startNewGame: ->
     @set 'deck', deck = new Deck()
@@ -17,14 +18,24 @@ class window.App extends Backbone.Model
     playerScore = @get('playerHand').scores()[0]
     @set 'playerCurrentScore', playerScore
     if playerScore > 21
+      alert 'you lose'
       @startNewGame()
 
   stand: ->
-    playerScore = @get 'playerCurrentScore'
-    dealerScore = @get('dealerHand').scores()[0]
 
-    @get('dealerHand').hit() while @get('dealerHand').scores()[0] < 17
-      # hit
+    @get('dealerHand').hit() while @get('dealerHand').dealerRealScore() < 17
+    @didDealerBust()
+
+  didDealerBust: ->
+
+    if @get('dealerHand').dealerRealScore() > 21
+      alert 'you win'
+      @startNewGame()
+
+
+
+
+
 
     # elif dealerScore > playerScore
       #
